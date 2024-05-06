@@ -34,7 +34,7 @@ def pause_game(self):
         PauseMenu()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_p:
                     self.game.is_pause = False
             if event.type == pygame.QUIT:
                 self.game.is_pause = False
@@ -64,23 +64,24 @@ class Player(pygame.sprite.Sprite):
             self.button_time = pygame.time.get_ticks()
 
         key_pressed = pygame.key.get_pressed()
-        if key_pressed[pygame.K_RIGHT]:
-            self.rect.x += self.speedx
-        if key_pressed[pygame.K_LEFT]:
-            self.rect.x -= self.speedx
-        if key_pressed[pygame.K_UP]:
-            self.rect.y -= self.speedx
-        if key_pressed[pygame.K_DOWN]:
-            self.rect.y += self.speedx
+        if not updated:
+            if key_pressed[pygame.K_RIGHT]:
+                self.rect.x += self.speedx
+            if key_pressed[pygame.K_LEFT]:
+                self.rect.x -= self.speedx
+            if key_pressed[pygame.K_UP]:
+                self.rect.y -= self.speedx
+            if key_pressed[pygame.K_DOWN]:
+                self.rect.y += self.speedx
 
-        if self.rect.right > WIDTH:
-            self.rect.right = WIDTH
-        if self.rect.left < 0:
-            self.rect.left = 0
-        if self.rect.bottom > layar.get_height():
-            self.rect.bottom = layar.get_height()
-        if self.rect.top < 0:
-            self.rect.top  = 0
+            if self.rect.right > WIDTH:
+                self.rect.right = WIDTH
+            if self.rect.left < 0:
+                self.rect.left = 0
+            if self.rect.bottom > layar.get_height():
+                self.rect.bottom = layar.get_height()
+            if self.rect.top < 0:
+                self.rect.top  = 0
 
     def buttonup(self):
         self.button += 1
@@ -88,7 +89,7 @@ class Player(pygame.sprite.Sprite):
 
     def shoot(self):
         now = pygame.time.get_ticks()
-        if now - self.last_shot > self.shoot_delay:
+        if now - self.last_shot > self.shoot_delay and  not updated:
             self.last_shot = now
             if self.button == 1:
                 bullet = Bullet(pygame.Vector2(self.rect.centerx,self.rect.top))
@@ -124,8 +125,9 @@ class Ufo(pygame.sprite.Sprite):
 
 #Atributed movement
     def update(self):
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        if not updated:
+            self.rect.x += self.speedx
+            self.rect.y += self.speedy
         if self.rect.top > layar.get_height() or self.rect.left>WIDTH or self.rect.right<0:
             self.rect.x=random.randrange(0,WIDTH-self.rect.width)
             self.rect.y=random.randrange(-100,-40)
@@ -160,7 +162,8 @@ class Bullet(pygame.sprite.Sprite):
         self.velocity = pygame.math.Vector2(math.cos(math.radians(angle))*speedy,math.sin(math.radians(angle))*speedy)
 
     def update(self):
-        self.rect.midbottom += self.velocity
+        if not updated:
+            self.rect.midbottom += self.velocity
         if self.rect.bottom < 0 or self.rect.top > layar.get_height() or self.rect.left > WIDTH or self.rect.right < 0:
             self.kill()
 
@@ -228,30 +231,32 @@ class AlienBoss(pygame.sprite.Sprite):
 
 
     def shoot(self):
-        self.alt = not self.alt
-        if self.alt:
-            bullet = Bullet(pygame.Vector2(self.rect.centerx-30,self.rect.bottom), -self.angle)
-        else :
-            bullet = Bullet(pygame.Vector2(self.rect.centerx+30,self.rect.bottom), -self.angle)
-        all_sprites.add(bullet)
-        hazard.add(bullet)
+        if not updated:
+            self.alt = not self.alt
+            if self.alt:
+                bullet = Bullet(pygame.Vector2(self.rect.centerx-30,self.rect.bottom), -self.angle)
+            else :
+                bullet = Bullet(pygame.Vector2(self.rect.centerx+30,self.rect.bottom), -self.angle)
+            all_sprites.add(bullet)
+            hazard.add(bullet)
 
 
     def update(self):
-        self.rect.y += self.move_in.y
-        if self.move_in.y > 0:
-            self.move_in.y *= 0.95
+        if not updated:
+            self.rect.y += self.move_in.y
+            if self.move_in.y > 0:
+                self.move_in.y *= 0.95
 
-        self.tick += 1
+            self.tick += 1
 
-        p_center = player.rect.center
-        s_center = self.rect.center
-        angle_in_rads = math.atan2(p_center[1] - s_center[1], p_center[0] - s_center[0])
+            p_center = player.rect.center
+            s_center = self.rect.center
+            angle_in_rads = math.atan2(p_center[1] - s_center[1], p_center[0] - s_center[0])
 
-        self.angle = -math.degrees(angle_in_rads)
-        if self.tick > self.attack_speed:
-            self.tick = 0
-            self.shoot()
+            self.angle = -math.degrees(angle_in_rads)
+            if self.tick > self.attack_speed:
+                self.tick = 0
+                self.shoot()
 
     def kill(self):
         self.healthbar.kill()
@@ -349,6 +354,7 @@ def menuGameOver():
 game_over = True
 running=True
 menu()
+updated=False
 hp = 0
 sound.bgmusic.play(loops=-1)        
 while running:
@@ -382,6 +388,7 @@ while running:
             sys.exit()
         elif event.type==pygame.KEYDOWN:
             if event.key == pygame.K_p:
+                updated =False
                 pause = not pause
             if event.key==pygame.K_SPACE: # keyboard spasi untuk menembak
                 player.shoot()
@@ -448,9 +455,13 @@ while running:
     player.show_score()
     player.show_lifepoints()
 
-    if pause:
+    if pause:   
         pause_screen()
-    pygame.display.update()
+        if not updated:
+            pygame.display.update()
+        updated =True
+    if not pause:
+        pygame.display.update()
 
     hits = pygame.sprite.spritecollide(player,hazard,False,pygame.sprite.collide_circle)
     # jika player terkena hit, life akan berkurang
