@@ -260,7 +260,7 @@ class AlienBoss(pygame.sprite.Sprite):
 
 #Tampilan kedua setelah menu()
 def waiting_screen():
-    layar.blit(pygame.transform.scale(image.background,(1000,600)),(0,0))
+    layar.blit(pygame.transform.scale(image.background,(layar.get_width(),layar.get_height())),(0,0))
     draw_text(layar, "STARBORNE STRIFE", 50, WIDTH/2, HEIGHT/4)
     draw_text(layar, "Press any key to play", 25, WIDTH/2, HEIGHT/2+20)
     draw_text(layar, "Arrow keys to move, Space key to Shoot", 18, WIDTH/2, HEIGHT*3/4+60)
@@ -278,7 +278,7 @@ def waiting_screen():
 
 #Tampilan awal
 def menu():
-    layar.blit(pygame.transform.scale(image.background,(1000,600)),(0,0))
+    layar.blit(pygame.transform.scale(image.background,(layar.get_width(),layar.get_height())),(0,0))
     draw_text(layar, "STARBORNE STRIFE", 65, WIDTH/2, HEIGHT/7)    
     pygame.display.flip()
     yvar=350
@@ -311,7 +311,7 @@ def menu():
 
 #Tampilan ketika GameOver
 def menuGameOver():
-    layar.blit(pygame.transform.scale(image.background,(1000,600)),(0,0))
+    layar.blit(pygame.transform.scale(image.background,(layar.get_width(),layar.get_height())),(0,0))
     draw_text(layar, "Game Over", 50, WIDTH/2, HEIGHT/8)    
 
     yvar=350
