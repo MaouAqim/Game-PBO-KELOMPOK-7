@@ -19,13 +19,26 @@ layar = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("Starborne Strife")
 fps = pygame.time.Clock()
 background = pygame.image.load(os.path.abspath("image/bg.png"))
-
+background = pygame.transform.scale(background,(layar.get_width(),layar.get_height()))
 pause = False
 
 def pause_screen():
     draw_text(layar, "Pause", 50, WIDTH / 2, HEIGHT / 2)
     draw_text(layar, "Press P to Resume", 30, WIDTH / 2, HEIGHT / 2 + 50)
     # pygame.display.flip()
+
+def pause_game(self):
+    self.game_pause = True
+
+    while self.game.is_pause:
+        PauseMenu()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.game.is_pause = False
+            if event.type == pygame.QUIT:
+                self.game.is_pause = False
+                self.run()
 
 #Class Player(Class Child)
 class Player(pygame.sprite.Sprite):
@@ -34,7 +47,7 @@ class Player(pygame.sprite.Sprite):
         self.image=pygame.transform.scale(image.player,(145,115))
         self.rect=self.image.get_rect()
         self.rect.centerx = WIDTH/2
-        self.rect.bottom=HEIGHT - 20
+        self.rect.bottom= layar.get_height() - 20
         self.speedx = 8
         self.score_val = 0
         self.life = 5
@@ -42,10 +55,10 @@ class Player(pygame.sprite.Sprite):
         self.button_time = pygame.time.get_ticks()
         self.last_shot = pygame.time.get_ticks()
         self.shoot_delay = 250
+        self.pause = False
 
     #artibuted movement
     def update(self):
-
         if self.button >= 2 and pygame.time.get_ticks() - self.button_time > 5000:
             self.button -= 1
             self.button_time = pygame.time.get_ticks()
@@ -64,8 +77,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.bottom > HEIGHT:
-            self.rect.bottom = HEIGHT
+        if self.rect.bottom > layar.get_height():
+            self.rect.bottom = layar.get_height()
         if self.rect.top < 0:
             self.rect.top  = 0
 
@@ -113,7 +126,7 @@ class Ufo(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
-        if self.rect.top > HEIGHT or self.rect.left>WIDTH or self.rect.right<0:
+        if self.rect.top > layar.get_height() or self.rect.left>WIDTH or self.rect.right<0:
             self.rect.x=random.randrange(0,WIDTH-self.rect.width)
             self.rect.y=random.randrange(-100,-40)
             self.speedx=random.randrange(-3,3)
@@ -148,7 +161,7 @@ class Bullet(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.midbottom += self.velocity
-        if self.rect.bottom < 0 or self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
+        if self.rect.bottom < 0 or self.rect.top > layar.get_height() or self.rect.left > WIDTH or self.rect.right < 0:
             self.kill()
 
 #Class Healthbar(Class Child)
@@ -386,6 +399,8 @@ while running:
                 player.life +=1
             elif event.key==pygame.K_6: #cheat menambah speed tembakan
                 player.shoot_delay -=250
+            if event.key == pygame.K_f:
+                pygame.display.toggle_fullscreen()
 
 
 
@@ -427,7 +442,7 @@ while running:
         Ufo.speedx=random.randrange(-5,1)
         Ufo.speedy=random.randrange(5,10)
 
-    layar.blit(pygame.transform.scale(image.background,(1000,600)),(0,0))
+    layar.blit(pygame.transform.scale(background,(layar.get_width(),layar.get_height())),(0,0))
     draw_text(layar, f"Level {level}", 20, WIDTH/2, HEIGHT-590)
     all_sprites.draw(layar)
     player.show_score()
