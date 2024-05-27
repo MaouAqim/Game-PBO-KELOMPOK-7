@@ -40,11 +40,11 @@ def pause_game(self):
                 self.game.is_pause = False
                 self.run()
 
-#Class Player(Class Child)
-class Player(pygame.sprite.Sprite):
+#Class Pilot (Class Child)
+class Pilot(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image=pygame.transform.scale(image.player,(145,115))
+        self.image=pygame.transform.scale(image.Pilot,(145,115))
         self.rect=self.image.get_rect()
         self.rect.centerx = WIDTH/2
         self.rect.bottom= layar.get_height() - 20
@@ -92,17 +92,17 @@ class Player(pygame.sprite.Sprite):
         if now - self.last_shot > self.shoot_delay and  not updated:
             self.last_shot = now
             if self.button == 1:
-                bullet = Bullet(pygame.Vector2(self.rect.centerx,self.rect.top))
-                all_sprites.add(bullet)
-                bullets.add(bullet)
+                Blast = Blast(pygame.Vector2(self.rect.centerx,self.rect.top))
+                all_sprites.add(Blast)
+                Blasts.add(Blast)
                 sound.missile.play()
             elif self.button >= 2:
-                bullet1 = Bullet(pygame.Vector2(self.rect.centerx-20,self.rect.top))
-                all_sprites.add(bullet1)
-                bullets.add(bullet1)
-                bullet2 = Bullet(pygame.Vector2(self.rect.centerx+20,self.rect.top))
-                all_sprites.add(bullet2)
-                bullets.add(bullet2)
+                Blast1 = Blast(pygame.Vector2(self.rect.centerx-20,self.rect.top))
+                all_sprites.add(Blast1)
+                Blasts.add(Blast1)
+                Blast2 = Blast(pygame.Vector2(self.rect.centerx+20,self.rect.top))
+                all_sprites.add(Blast2)
+                Blasts.add(Blast2)
                 sound.missile.play()  
 
     def show_lifepoints(self):
@@ -151,11 +151,11 @@ class Button(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT:
             self.kill()
 
-#Class Bullet(Class Child)
-class Bullet(pygame.sprite.Sprite):
+#Class Blast(Class Child)
+class Blast(pygame.sprite.Sprite):
     def __init__(self,position:pygame.Vector2,angle:float=-90):
         pygame.sprite.Sprite.__init__(self)
-        self.image=pygame.transform.rotate(pygame.transform.scale(image.bullet,(25,35)),-angle+180+90)
+        self.image=pygame.transform.rotate(pygame.transform.scale(image.Blast,(25,35)),-angle+180+90)
         self.rect=self.image.get_rect()
         self.rect.midbottom=position
         speedy = 10
@@ -234,11 +234,11 @@ class AlienBoss(pygame.sprite.Sprite):
         if not updated:
             self.alt = not self.alt
             if self.alt:
-                bullet = Bullet(pygame.Vector2(self.rect.centerx-30,self.rect.bottom), -self.angle)
+                Blast = Blast(pygame.Vector2(self.rect.centerx-30,self.rect.bottom), -self.angle)
             else :
-                bullet = Bullet(pygame.Vector2(self.rect.centerx+30,self.rect.bottom), -self.angle)
-            all_sprites.add(bullet)
-            hazard.add(bullet)
+                Blast = Blast(pygame.Vector2(self.rect.centerx+30,self.rect.bottom), -self.angle)
+            all_sprites.add(Blast)
+            hazard.add(Blast)
 
 
     def update(self):
@@ -249,7 +249,7 @@ class AlienBoss(pygame.sprite.Sprite):
 
             self.tick += 1
 
-            p_center = player.rect.center
+            p_center = Pilot.rect.center
             s_center = self.rect.center
             angle_in_rads = math.atan2(p_center[1] - s_center[1], p_center[0] - s_center[0])
 
@@ -323,7 +323,7 @@ def menuGameOver():
     xvar=500
 
     draw_text(layar, "START", 55, WIDTH/2, yvar-25)
-    draw_text(layar, f"Your score : {player.score_val}", 20, WIDTH/2, 130)
+    draw_text(layar, f"Your score : {GalGuard.score_val}", 20, WIDTH/2, 130)
     draw_text(layar, f"Your level : {level}", 17, WIDTH/2, 210)
     draw_text(layar, "QUIT",30, WIDTH/2, 550) 
     pygame.draw.circle(layar, (RED), (xvar,yvar), 112,5)
@@ -339,7 +339,7 @@ def menuGameOver():
                 xpos, ypos = pygame.mouse.get_pos()
                 cek = math.sqrt((xvar - xpos)**2 + (yvar - ypos)**2)
                 if cek <= 70:
-                    player.score_val = 0
+                    Pilot.score_val = 0
                     waiting = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 xpos, ypos = pygame.mouse.get_pos()
@@ -364,19 +364,19 @@ while running:
         game_over = False
         all_sprites = pygame.sprite.Group()
         hazard = pygame.sprite.Group()
-        bullets = pygame.sprite.Group()
-        player = Player()
+        Blasts = pygame.sprite.Group()
+        Pilot = Pilot()
         level = 1
 
-        all_sprites.add(player)
+        all_sprites.add(Pilot)
 
         for i in range(4):
             ufo=Ufo()
             all_sprites.add(ufo)
             hazard.add(ufo)
-        player.score_val = 0
+        Pilot.score_val = 0
         # Test alienBoss
-        # if player.score_val % 100 == 0:
+        # if Pilot.score_val % 100 == 0:
         #     test = alienBoss(100)
         #     all_sprites.add(test)
         #     hazard.add(test)
@@ -391,28 +391,28 @@ while running:
                 updated =False
                 pause = not pause
             if event.key==pygame.K_SPACE: # keyboard spasi untuk menembak
-                player.shoot()
+                Pilot.shoot()
             elif event.key==pygame.K_1: #cheat menambah skor dengan keyboard angka 1
-                player.score_val +=1
+                Pilot.score_val +=1
             elif event.key==pygame.K_2: #shorcut untuk langsung game over dengan keyboard angka 2
                 menuGameOver()  
                 game_over = True
             elif event.key==pygame.K_3: #cheat menambah peluru menjadi 2 dengan keyboard angka 3
-                player.button=2
-                player.shoot()
+                Pilot.button=2
+                Pilot.shoot()
             elif event.key==pygame.K_4: #cheat menambah skor +25 dengan keyboard angka 4
-                player.score_val +=50
+                Pilot.score_val +=50
             elif event.key==pygame.K_5: #cheat untuk menambah health point +1
-                player.life +=1
+                Pilot.life +=1
             elif event.key==pygame.K_6: #cheat menambah speed tembakan
-                player.shoot_delay -=250
+                Pilot.shoot_delay -=250
             if event.key == pygame.K_f:
                 pygame.display.toggle_fullscreen()
 
 
 
     all_sprites.update()
-    hits=pygame.sprite.groupcollide(hazard,bullets,False,True)
+    hits=pygame.sprite.groupcollide(hazard,Blasts,False,True)
 
 
     for hit in hits:
@@ -423,17 +423,17 @@ while running:
             ufo=Ufo()
             all_sprites.add(ufo)
             hazard.add(ufo)
-            player.score_val +=1
+            Pilot.score_val +=1
 
-            if player.score_val % 30 == 0:
+            if Pilot.score_val % 30 == 0:
                 hp += 50 #setiap skor kelipatan 30 HP alienBoss bertambah 50
                 alienBoss = AlienBoss(hp)
                 all_sprites.add(alienBoss)
                 hazard.add(alienBoss)
-                player.buttonup()
+                Pilot.buttonup()
                 level += 1
-                player.life += 1
-            elif player.score_val % 10 == 0:
+                Pilot.life += 1
+            elif Pilot.score_val % 10 == 0:
                 button=Button()
                 all_sprites.add(button)
                 hazard.add(button)
@@ -452,8 +452,8 @@ while running:
     layar.blit(pygame.transform.scale(background,(layar.get_width(),layar.get_height())),(0,0))
     draw_text(layar, f"Level {level}", 20, WIDTH/2, HEIGHT-590)
     all_sprites.draw(layar)
-    player.show_score()
-    player.show_lifepoints()
+    Pilot.show_score()
+    Pilot.show_lifepoints()
 
     if pause:   
         pause_screen()
@@ -463,8 +463,8 @@ while running:
     if not pause:
         pygame.display.update()
 
-    hits = pygame.sprite.spritecollide(player,hazard,False,pygame.sprite.collide_circle)
-    # jika player terkena hit, life akan berkurang
+    hits = pygame.sprite.spritecollide(Pilot,hazard,False,pygame.sprite.collide_circle)
+    # jika Pilot terkena hit, life akan berkurang
     for hit in hits:
         if isinstance(hit, Ufo):
             sound.expl.play()
@@ -472,17 +472,17 @@ while running:
             ufo=Ufo()
             all_sprites.add(ufo)
             hazard.add(ufo)
-            player.life -= 1
-        elif isinstance(hit, Bullet):
+            Pilot.life -= 1
+        elif isinstance(hit, Blast):
             sound.expl.play()
             hit.kill()
-            player.life -= 1
+            Pilot.life -= 1
         else:
             hit.kill()
             sound.buttonup.play()
-            player.buttonup()
+            Pilot.buttonup()
 
-        if player.life < 0:
+        if Pilot.life < 0:
             game_over = True
             menuGameOver() 
 
