@@ -112,10 +112,10 @@ class Pilot(pygame.sprite.Sprite):
         draw_text(layar, f"Score : {self.score_val}", 20, WIDTH-920, HEIGHT-590)
 
 #Class Musuh atau Lawan
-class Ufo(pygame.sprite.Sprite):
+class Saucer(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image=pygame.transform.scale(image.ufo,(80,95))
+        self.image=pygame.transform.scale(image.saucer,(80,95))
         self.rect=self.image.get_rect()
         self.radius=self.rect.width*0.1/2
         self.rect.x=random.randrange(0,WIDTH-self.rect.width)
@@ -371,9 +371,9 @@ while running:
         all_sprites.add(Pilot)
 
         for i in range(4):
-            ufo=Ufo()
-            all_sprites.add(ufo)
-            hazard.add(ufo)
+            saucer=Saucer()
+            all_sprites.add(saucer)
+            hazard.add(saucer)
         Pilot.score_val = 0
         # Test alienBoss
         # if Pilot.score_val % 100 == 0:
@@ -417,12 +417,12 @@ while running:
 
     for hit in hits:
         # cek apakah peluru mengenai lawan
-        if isinstance(hit, Ufo):
+        if isinstance(hit, Saucer):
             sound.exlp2.play()
             hit.kill()
-            ufo=Ufo()
-            all_sprites.add(ufo)
-            hazard.add(ufo)
+            saucer=Saucer()
+            all_sprites.add(saucer)
+            hazard.add(saucer)
             Pilot.score_val +=1
 
             if Pilot.score_val % 30 == 0:
@@ -446,8 +446,8 @@ while running:
 
     # ketika level lebih dari 2 alien meluncur lebih cepat
     if level >= 2:
-        Ufo.speedx=random.randrange(-5,1)
-        Ufo.speedy=random.randrange(5,10)
+        Saucer.speedx=random.randrange(-5,1)
+        Saucer.speedy=random.randrange(5,10)
 
     layar.blit(pygame.transform.scale(background,(layar.get_width(),layar.get_height())),(0,0))
     draw_text(layar, f"Level {level}", 20, WIDTH/2, HEIGHT-590)
@@ -466,12 +466,12 @@ while running:
     hits = pygame.sprite.spritecollide(Pilot,hazard,False,pygame.sprite.collide_circle)
     # jika Pilot terkena hit, life akan berkurang
     for hit in hits:
-        if isinstance(hit, Ufo):
+        if isinstance(hit, Saucer):
             sound.expl.play()
             hit.kill()
-            ufo=Ufo()
-            all_sprites.add(ufo)
-            hazard.add(ufo)
+            saucer=Saucer()
+            all_sprites.add(saucer)
+            hazard.add(saucer)
             Pilot.life -= 1
         elif isinstance(hit, Blast):
             sound.expl.play()
