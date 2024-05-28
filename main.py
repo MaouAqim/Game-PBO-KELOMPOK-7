@@ -92,17 +92,17 @@ class Pilot(pygame.sprite.Sprite):
         if now - self.last_shot > self.shoot_delay and  not updated:
             self.last_shot = now
             if self.button == 1:
-                Blast = Blast(pygame.Vector2(self.rect.centerx,self.rect.top))
-                all_sprites.add(Blast)
-                Blasts.add(Blast)
+                blast = Blast(pygame.Vector2(self.rect.centerx,self.rect.top))
+                all_sprites.add(blast)
+                blasts.add(blast)
                 sound.missile.play()
             elif self.button >= 2:
-                Blast1 = Blast(pygame.Vector2(self.rect.centerx-20,self.rect.top))
-                all_sprites.add(Blast1)
-                Blasts.add(Blast1)
-                Blast2 = Blast(pygame.Vector2(self.rect.centerx+20,self.rect.top))
-                all_sprites.add(Blast2)
-                Blasts.add(Blast2)
+                blast1 = Blast(pygame.Vector2(self.rect.centerx-20,self.rect.top))
+                all_sprites.add(blast1)
+                blasts.add(blast1)
+                blast2 = Blast(pygame.Vector2(self.rect.centerx+20,self.rect.top))
+                all_sprites.add(blast2)
+                blasts.add(blast2)
                 sound.missile.play()  
 
     def show_lifepoints(self):
@@ -234,11 +234,11 @@ class AlienBoss(pygame.sprite.Sprite):
         if not updated:
             self.alt = not self.alt
             if self.alt:
-                Blast = Blast(pygame.Vector2(self.rect.centerx-30,self.rect.bottom), -self.angle)
+                blast = Blast(pygame.Vector2(self.rect.centerx-30,self.rect.bottom), -self.angle)
             else :
-                Blast = Blast(pygame.Vector2(self.rect.centerx+30,self.rect.bottom), -self.angle)
-            all_sprites.add(Blast)
-            hazard.add(Blast)
+                blast = Blast(pygame.Vector2(self.rect.centerx+30,self.rect.bottom), -self.angle)
+            all_sprites.add(blast)
+            hazard.add(blast)
 
 
     def update(self):
@@ -323,7 +323,7 @@ def menuGameOver():
     xvar=500
 
     draw_text(layar, "START", 55, WIDTH/2, yvar-25)
-    draw_text(layar, f"Your score : {GalGuard.score_val}", 20, WIDTH/2, 130)
+    draw_text(layar, f"Your score : {Pilot.score_val}", 20, WIDTH/2, 130)
     draw_text(layar, f"Your level : {level}", 17, WIDTH/2, 210)
     draw_text(layar, "QUIT",30, WIDTH/2, 550) 
     pygame.draw.circle(layar, (RED), (xvar,yvar), 112,5)
@@ -364,7 +364,7 @@ while running:
         game_over = False
         all_sprites = pygame.sprite.Group()
         hazard = pygame.sprite.Group()
-        Blasts = pygame.sprite.Group()
+        blasts = pygame.sprite.Group()
         Pilot = Pilot()
         level = 1
 
@@ -412,7 +412,7 @@ while running:
 
 
     all_sprites.update()
-    hits=pygame.sprite.groupcollide(hazard,Blasts,False,True)
+    hits=pygame.sprite.groupcollide(hazard,blasts,False,True)
 
 
     for hit in hits:
