@@ -44,7 +44,7 @@ def pause_game(self):
 class Pilot(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image=pygame.transform.scale(image.Pilot,(145,115))
+        self.image=pygame.transform.scale(image.pilot,(145,115))
         self.rect=self.image.get_rect()
         self.rect.centerx = WIDTH/2
         self.rect.bottom= layar.get_height() - 20
@@ -134,11 +134,11 @@ class Saucer(pygame.sprite.Sprite):
             self.speedx=random.randrange(-3,3)
             self.speedy=random.randrange(2,8)
 
-#Class Button atau Peluru Tambahan
-class Button(pygame.sprite.Sprite):
+#Class Energi atau Peluru Tambahan
+class Energi(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(image.button,(35,55))
+        self.image = pygame.transform.scale(image.energi,(35,55))
         self.rect = self.image.get_rect()
         self.radius=self.rect.width*0.1/2
         self.rect.x=random.randrange(0,WIDTH-self.rect.width)
@@ -155,7 +155,7 @@ class Button(pygame.sprite.Sprite):
 class Blast(pygame.sprite.Sprite):
     def __init__(self,position:pygame.Vector2,angle:float=-90):
         pygame.sprite.Sprite.__init__(self)
-        self.image=pygame.transform.rotate(pygame.transform.scale(image.Blast,(25,35)),-angle+180+90)
+        self.image=pygame.transform.rotate(pygame.transform.scale(image.blast,(25,35)),-angle+180+90)
         self.rect=self.image.get_rect()
         self.rect.midbottom=position
         speedy = 10
@@ -178,11 +178,11 @@ class Healthbar(pygame.sprite.Sprite):
         self.rect.centerx = WIDTH/2
         self.rect.bottom = 80
 
-#Class AlienBoss(Class Child)
-class AlienBoss(pygame.sprite.Sprite):
+#Class Boss(Class Child)
+class Boss(pygame.sprite.Sprite):
     def __init__(self, max_health:int, attack_speed:int = 50):
         pygame.sprite.Sprite.__init__(self)
-        self.source_image = pygame.transform.rotate(pygame.transform.scale(image.alienBoss,(110,130)),90)
+        self.source_image = pygame.transform.rotate(pygame.transform.scale(image.boss,(110,130)),90)
         self._angle = 180
         self.image = pygame.transform.rotate(self.source_image, self.angle)
         self.rect=self.image.get_rect()
@@ -249,7 +249,7 @@ class AlienBoss(pygame.sprite.Sprite):
 
             self.tick += 1
 
-            p_center = Pilot.rect.center
+            p_center = pilot.rect.center
             s_center = self.rect.center
             angle_in_rads = math.atan2(p_center[1] - s_center[1], p_center[0] - s_center[0])
 
@@ -323,7 +323,7 @@ def menuGameOver():
     xvar=500
 
     draw_text(layar, "START", 55, WIDTH/2, yvar-25)
-    draw_text(layar, f"Your score : {Pilot.score_val}", 20, WIDTH/2, 130)
+    draw_text(layar, f"Your score : {pilot.score_val}", 20, WIDTH/2, 130)
     draw_text(layar, f"Your level : {level}", 17, WIDTH/2, 210)
     draw_text(layar, "QUIT",30, WIDTH/2, 550) 
     pygame.draw.circle(layar, (RED), (xvar,yvar), 112,5)
@@ -339,7 +339,7 @@ def menuGameOver():
                 xpos, ypos = pygame.mouse.get_pos()
                 cek = math.sqrt((xvar - xpos)**2 + (yvar - ypos)**2)
                 if cek <= 70:
-                    Pilot.score_val = 0
+                    pilot.score_val = 0
                     waiting = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 xpos, ypos = pygame.mouse.get_pos()
@@ -365,19 +365,19 @@ while running:
         all_sprites = pygame.sprite.Group()
         hazard = pygame.sprite.Group()
         blasts = pygame.sprite.Group()
-        Pilot = Pilot()
+        pilot = Pilot()
         level = 1
 
-        all_sprites.add(Pilot)
+        all_sprites.add(pilot)
 
         for i in range(4):
             saucer=Saucer()
             all_sprites.add(saucer)
             hazard.add(saucer)
-        Pilot.score_val = 0
-        # Test alienBoss
-        # if Pilot.score_val % 100 == 0:
-        #     test = alienBoss(100)
+        pilot.score_val = 0
+        # Test Boss
+        # if pilot.score_val % 100 == 0:
+        #     test = Boss(100)
         #     all_sprites.add(test)
         #     hazard.add(test)
 
@@ -391,21 +391,21 @@ while running:
                 updated =False
                 pause = not pause
             if event.key==pygame.K_SPACE: # keyboard spasi untuk menembak
-                Pilot.shoot()
+                pilot.shoot()
             elif event.key==pygame.K_1: #cheat menambah skor dengan keyboard angka 1
-                Pilot.score_val +=1
+                pilot.score_val +=1
             elif event.key==pygame.K_2: #shorcut untuk langsung game over dengan keyboard angka 2
                 menuGameOver()  
                 game_over = True
             elif event.key==pygame.K_3: #cheat menambah peluru menjadi 2 dengan keyboard angka 3
-                Pilot.button=2
-                Pilot.shoot()
+                pilot.button=2
+                pilot.shoot()
             elif event.key==pygame.K_4: #cheat menambah skor +25 dengan keyboard angka 4
-                Pilot.score_val +=50
+                pilot.score_val +=50
             elif event.key==pygame.K_5: #cheat untuk menambah health point +1
-                Pilot.life +=1
+                pilot.life +=1
             elif event.key==pygame.K_6: #cheat menambah speed tembakan
-                Pilot.shoot_delay -=250
+                pilot.shoot_delay -=250
             if event.key == pygame.K_f:
                 pygame.display.toggle_fullscreen()
 
@@ -423,28 +423,28 @@ while running:
             saucer=Saucer()
             all_sprites.add(saucer)
             hazard.add(saucer)
-            Pilot.score_val +=1
+            pilot.score_val +=1
 
-            if Pilot.score_val % 30 == 0:
-                hp += 50 #setiap skor kelipatan 30 HP alienBoss bertambah 50
-                alienBoss = AlienBoss(hp)
-                all_sprites.add(alienBoss)
-                hazard.add(alienBoss)
-                Pilot.buttonup()
+            if pilot.score_val % 30 == 0:
+                hp += 50 #setiap skor kelipatan 30 HP Boss bertambah 50
+                boss = Boss(hp)
+                all_sprites.add(boss)
+                hazard.add(boss)
+                pilot.buttonup()
                 level += 1
-                Pilot.life += 1
-            elif Pilot.score_val % 10 == 0:
-                button=Button()
-                all_sprites.add(button)
-                hazard.add(button)
+                pilot.life += 1
+            elif pilot.score_val % 10 == 0:
+                energi=Energi()
+                all_sprites.add(energi)
+                hazard.add(energi)
 
-        # cek apakah peluru mengenai alienBoss        
-        elif isinstance(hit, AlienBoss): 
+        # cek apakah peluru mengenai Boss        
+        elif isinstance(hit, Boss): 
             sound.exlp2.play()
             hit.hurt()
 
 
-    # ketika level lebih dari 2 alien meluncur lebih cepat
+    # ketika level lebih dari 2 musuh meluncur lebih cepat
     if level >= 2:
         Saucer.speedx=random.randrange(-5,1)
         Saucer.speedy=random.randrange(5,10)
@@ -452,8 +452,8 @@ while running:
     layar.blit(pygame.transform.scale(background,(layar.get_width(),layar.get_height())),(0,0))
     draw_text(layar, f"Level {level}", 20, WIDTH/2, HEIGHT-590)
     all_sprites.draw(layar)
-    Pilot.show_score()
-    Pilot.show_lifepoints()
+    pilot.show_score()
+    pilot.show_lifepoints()
 
     if pause:   
         pause_screen()
@@ -463,7 +463,7 @@ while running:
     if not pause:
         pygame.display.update()
 
-    hits = pygame.sprite.spritecollide(Pilot,hazard,False,pygame.sprite.collide_circle)
+    hits = pygame.sprite.spritecollide(pilot,hazard,False,pygame.sprite.collide_circle)
     # jika Pilot terkena hit, life akan berkurang
     for hit in hits:
         if isinstance(hit, Saucer):
@@ -472,17 +472,17 @@ while running:
             saucer=Saucer()
             all_sprites.add(saucer)
             hazard.add(saucer)
-            Pilot.life -= 1
+            pilot.life -= 1
         elif isinstance(hit, Blast):
             sound.expl.play()
             hit.kill()
-            Pilot.life -= 1
+            pilot.life -= 1
         else:
             hit.kill()
             sound.buttonup.play()
-            Pilot.buttonup()
+            pilot.buttonup()
 
-        if Pilot.life < 0:
+        if pilot.life < 0:
             game_over = True
             menuGameOver() 
 
