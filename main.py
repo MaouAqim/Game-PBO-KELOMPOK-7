@@ -406,7 +406,7 @@ while running:
                 pilot.life +=1
             elif event.key==pygame.K_6: #cheat menambah speed tembakan
                 pilot.shoot_delay -=250
-            if event.key == pygame.K_f: #fungsi untuk full screen
+            if event.key == pygame.K_f: #fungsi untuk full screen f
                 pygame.display.toggle_fullscreen()
 
 
