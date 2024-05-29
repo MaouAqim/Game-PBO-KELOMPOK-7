@@ -167,7 +167,7 @@ class Blast(pygame.sprite.Sprite):
         if self.rect.bottom < 0 or self.rect.top > layar.get_height() or self.rect.left > WIDTH or self.rect.right < 0:
             self.kill()
 
-#Class Darah(Class Child)
+#Class Darah(Class Child) ini itu bagian dari boss
 #Implementasi Polymorphism
 class Healthbar(pygame.sprite.Sprite):
     def __init__(self):
@@ -401,7 +401,7 @@ while running:
                 pilot.button=2
                 pilot.shoot()
             elif event.key==pygame.K_4: #cheat menambah skor +25 dengan keyboard angka 4
-                pilot.score_val +=50
+                pilot.score_val +=25
             elif event.key==pygame.K_5: #cheat untuk menambah health point +1
                 pilot.life +=1
             elif event.key==pygame.K_6: #cheat menambah speed tembakan
