@@ -167,7 +167,7 @@ class Blast(pygame.sprite.Sprite):
         if self.rect.bottom < 0 or self.rect.top > layar.get_height() or self.rect.left > WIDTH or self.rect.right < 0:
             self.kill()
 
-#Class Healthbar(Class Child)
+#Class Darah(Class Child)
 #Implementasi Polymorphism
 class Healthbar(pygame.sprite.Sprite):
     def __init__(self):
