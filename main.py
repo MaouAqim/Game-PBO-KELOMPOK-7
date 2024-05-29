@@ -40,7 +40,7 @@ def pause_game(self):
                 self.game.is_pause = False
                 self.run()
 
-#Class Pilot (Class Child)
+#Class Player (Class Child)
 class Pilot(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -151,7 +151,7 @@ class Energi(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT:
             self.kill()
 
-#Class Blast(Class Child)
+#Class Tembakan(Class Child)
 class Blast(pygame.sprite.Sprite):
     def __init__(self,position:pygame.Vector2,angle:float=-90):
         pygame.sprite.Sprite.__init__(self)
@@ -178,7 +178,7 @@ class Healthbar(pygame.sprite.Sprite):
         self.rect.centerx = WIDTH/2
         self.rect.bottom = 80
 
-#Class Boss(Class Child)
+#Class Boss Musuh(Class Child)
 class Boss(pygame.sprite.Sprite):
     def __init__(self, max_health:int, attack_speed:int = 50):
         pygame.sprite.Sprite.__init__(self)
