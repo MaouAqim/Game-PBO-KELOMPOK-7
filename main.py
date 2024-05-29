@@ -387,7 +387,7 @@ while running:
             pygame.quit()
             sys.exit()
         elif event.type==pygame.KEYDOWN:
-            if event.key == pygame.K_p:
+            if event.key == pygame.K_p: #tombol pause nya menggunakan p
                 updated =False
                 pause = not pause
             if event.key==pygame.K_SPACE: # keyboard spasi untuk menembak
