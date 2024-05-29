@@ -6,4 +6,4 @@ pilot=pygame.image.load(os.path.join("image","pilot.png"))
 saucer=pygame.image.load(os.path.join("image","saucer.png"))
 energi=pygame.image.load(os.path.join("image","energi.png"))
 boss=pygame.image.load(os.path.join("image","boss.png"))
-heart=pygame.image.load(os.path.join("image","heart.png"))
+
