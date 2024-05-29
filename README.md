@@ -4,6 +4,8 @@ STARBORNE STRIFE!
 
 Game ini diberi nama Starborne Strife. "Starborne" mengacu pada sesuatu yang berasal dari bintang atau terkait dengan bintang, sementara "Strife" mengacu pada konflik atau pertempuran. Jadi, secara keseluruhan, makna "Starborne Strife" adalah pertempuran atau konflik yang terjadi di dunia dengan bintang atau ruang angkasa.
 
+Pilot di tugaskan keluar angkasa dengan menggunakan pesawat luar angkasa , ketika pilot ditugaskan dalam perjalanan menjelajahi bintang bintang dan tata surya , Pilot di hadang oleh makhluk makhluk luar angkasa yang dapat menyebabkan pesawat pilot mengalami kerusakan. Oleh karena itu pilot harus bertahan dari gempuran makhluk makhluk luar menggunakan senapan berisikan peluru yang akan menghancurkan makhluk luar, akan tetapi tidak semudah itu , dimana terdapat boss dari makhluk luar yang dapat membalaskan tembakan ke pilot sehingga menyebabkan pilot hancur. Akankah si pilot dapat bertahan demi menjelajahi bintang bintang?
+
 Nama Anggota Kelompok
 Silva Oktaria Putri - 122140085
 Muklis Mustaqim - 122140115
