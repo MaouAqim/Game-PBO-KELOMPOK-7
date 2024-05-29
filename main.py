@@ -27,7 +27,7 @@ def pause_screen():
     draw_text(layar, "Press P to Resume", 30, WIDTH / 2, HEIGHT / 2 + 50)
     # pygame.display.flip()
 
-def pause_game(self):
+def pause_game(self): #fitur yang digunakan untuk menghentikan game beserta update nya sementara
     self.game_pause = True
 
     while self.game.is_pause:
