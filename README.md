@@ -2,9 +2,7 @@ TUBES PBO RB KELOMPOK 7
 
 STARBORNE STRIFE!
 
-Game ini diberi nama Starborne Strife. "Starborne" mengacu pada sesuatu yang berasal dari bintang atau terkait dengan bintang, sementara "Strife" mengacu pada konflik atau pertempuran. Jadi, secara keseluruhan, makna "Starborne Strife" adalah pertempuran atau konflik yang terjadi di dunia dengan bintang atau ruang angkasa.
-
-Pilot di tugaskan keluar angkasa dengan menggunakan pesawat luar angkasa. Ketika pilot ditugaskan dalam perjalanan menjelajahi bintang bintang dan tata surya, pilot dihadang oleh makhluk luar angkasa yang dapat menyebabkan pesawat pilot mengalami kerusakan. Oleh karena itu, pilot harus bertahan dari gempuran makhluk luar menggunakan senapan berisikan peluru yang akan menghancurkan makhluk luar, akan tetapi tidak semudah itu. Terdapat boss dari makhluk luar yang dapat membalaskan tembakan ke pilot sehingga menyebabkan pilot hancur. Akankah si pilot dapat bertahan demi menjelajahi bintang bintang?
+Dalam game "Strabone Strife: Saucer Assault", kita akan memasuki dunia di masa depan di mana galaksi kita diserang oleh armada alien yang ganas. Kita akan mengendalikan seorang pilot musuh yang terpilih untuk mempertahankan kepentingan alien di galaksi ini. Tugas kita adalah menghancurkan kapal-kapal musuh, menghindari serangan dari kapal pertahanan manusia, serta mengumpulkan sumber daya dan kekuatan tambahan untuk meningkatkan kemampuan saucer kita. Hanya dengan keberanian, keahlian, dan strategi yang tepat, kita dapat menjadi pahlawan di pihak alien yang akan menguasai galaksi.
 
 Nama Anggota Kelompok: 
 Silva Oktaria Putri - 122140085
